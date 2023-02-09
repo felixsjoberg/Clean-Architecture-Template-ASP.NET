@@ -8,40 +8,39 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Persistence.Base;
 public class QueryRepository<T> : DapperContext, IQueryRepository<T> where T : class
 {
-    private readonly DapperContext _context;
-
-    public QueryRepository(DapperContext context)
-    {
-        _context = context;
-
-    }
     public QueryRepository(IConfiguration configuration)
         : base(configuration)
     {
-        
-    }
 
+    }
+    // Example database SQLite is without stored procedures.
+    // Recommended to change database & use stored procedures.
+    // https://github.com/DapperLib/Dapper#stored-procedures
     public async Task<IEnumerable<T>> GetAllAsync()
     {
-        using (var db = _context.CreateConnection())
+        using (var db = CreateConnection())
         {
-            return await db.QueryAsync<T>("GetAll", commandType: CommandType.StoredProcedure);
+            var query = "SELECT * FROM Users";
+            return await db.QueryAsync<T>(query);
         }
     }
 
     public async Task<T> GetByEmail(string email)
     {
-        using (var db = _context.CreateConnection())
+        using (var db = CreateConnection())
         {
-            return await db.QuerySingleOrDefaultAsync<T>("GetByEmail", new { email }, commandType: CommandType.StoredProcedure);
+            var query = "SELECT * FROM Users WHERE Email = @email";
+            var result = await db.QuerySingleOrDefaultAsync<T>(query, new { email });
+            return result;
         }
     }
 
-    public async Task<T> GetByIdAsync(int id)
+    public async Task<T> GetByIdAsync(Guid id)
     {
-        using (var db = _context.CreateConnection())
+        using (var db = CreateConnection())
         {
-            return await db.QuerySingleOrDefaultAsync<T>("GetById", new { id }, commandType: CommandType.StoredProcedure);
+            var query = $"SELECT * FROM Users WHERE UserId = @id";
+            return await db.QuerySingleOrDefaultAsync<T>(query, new { id });
         }
     }
 }

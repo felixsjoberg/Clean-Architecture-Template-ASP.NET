@@ -33,10 +33,10 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Authentic
             Email = request.Email,
             Password = request.Password
         };
-        // if (await _userQueryRepository.GetByEmail(user.Email) is not null)
-        // {
-        //     throw new Exception("User already exists");
-        // }
+        if (await _userQueryRepository.GetByEmail(user.Email) is not null)
+        {
+            throw new Exception("User already exists");
+        }
 
         var newUser = await _userCommandRepository.AddAsync(user);
 

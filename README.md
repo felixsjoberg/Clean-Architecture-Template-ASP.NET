@@ -1,4 +1,4 @@
-# ASP.NET Core WebApi - Clean Architecture Template
+# ASP.NET Core 7 WebApi - Clean Architecture Template
 <br />
 <p align="center">
   <a href="#">
@@ -8,12 +8,9 @@
   <h3 align="center">Clean Architecture Template</h3>
 
   <p align="center">
-    ASP.NET Core Web Api Template built with CQRS/MediatR pattern with EF Core & Dapper for data access.
-    
-    Dapper query against storedProcedures.
-    EF Core commands against database.
-
-    Project has built in Sqlite database in infrastructure layer for building & testing. This is could easily be switched out during finalization of built project for  
+    ASP.NET Core Web Api Template built with CQRS/MediatR pattern with EF Core & Dapper for data access. 
+    This template is built with a clean architecture approach. With Dapper being used for queries against the database and EF Core for commands.
+    Project is using Sqlite database in the infrastructure layer for building & testing. This is could easily be switched out during finalization of built project for SQL Server or other database provider.
   </p>
 </p>
 

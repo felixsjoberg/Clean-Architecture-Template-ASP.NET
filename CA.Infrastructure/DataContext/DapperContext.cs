@@ -9,7 +9,6 @@ public class DapperContext
 
     public DapperContext()
     {
-
     }
     protected DapperContext(IConfiguration configuration)
     {

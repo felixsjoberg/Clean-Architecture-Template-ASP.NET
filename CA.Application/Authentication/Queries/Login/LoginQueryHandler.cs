@@ -26,16 +26,12 @@ public class LoginQueryHandler :
 
     public async Task<AuthenticationResponse> Handle(LoginQuery query, CancellationToken cancellationToken)
     {
-        var user = new User
-        {
-            Email = query.Email,
-            Password = query.Password
-        };
-        // if (await _userQueryRepository.GetByEmail(user.Email) is not User User)
-        // {
-        //     throw new Exception("User does not exist");
-        // }
+        var user = await _userQueryRepository.GetByEmail(query.Email);
 
+        if (user is null)
+        {
+            throw new Exception("User does not exist");
+        }
 
         if (user.Password != query.Password)
         {

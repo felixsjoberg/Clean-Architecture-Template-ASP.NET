@@ -1,11 +1,9 @@
 using System.Text;
-using Application.Common.Interfaces.Persistence;
 using Application.Common.Interfaces.Persistence.Commands;
 using Application.Common.Interfaces.Persistence.Query;
 using CA.Application.Common.Interfaces.Authentication;
 using CA.Application.Common.Interfaces.Persistence.Base;
 using CA.Infrastructure.DataContext;
-using CA.Infrastructure.Persistence;
 using CA.Infrastructure.Persistence.Base;
 using CA.Infrastructure.Persistence.Commands;
 using CA.Infrastructure.Persistence.Query;
