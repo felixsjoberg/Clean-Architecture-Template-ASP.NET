@@ -18,13 +18,13 @@ public class AuthenticationController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost("{id)")]
-    public async Task<ActionResult> Register(RegisterCommand command)
+    [HttpPost("register")]
+    public async Task<IActionResult> Register(RegisterCommand command)
     {
         return Ok(await _mediator.Send(command));
     }
-    [HttpPost]
-    public async Task<ActionResult> Login(LoginQuery query)
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginQuery query)
     {
         return Ok(await _mediator.Send(query));
     }

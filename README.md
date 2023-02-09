@@ -9,9 +9,11 @@
 
   <p align="center">
     ASP.NET Core Web Api Template built with CQRS/MediatR pattern with EF Core & Dapper for data access.
-
+    
     Dapper query against storedProcedures.
     EF Core commands against database.
+
+    Project has built in Sqlite database in infrastructure layer for building & testing. This is could easily be switched out during finalization of built project for  
   </p>
 </p>
 
@@ -22,6 +24,7 @@
 - [x] Clean Architecture
 - [x] Dapper Command Side
 - [x] EF Core Query Side
+- [x] Sqlite db
 - [x] StoredProcedures SQL
 - [x] Repository Pattern
 - [x] Options Pattern

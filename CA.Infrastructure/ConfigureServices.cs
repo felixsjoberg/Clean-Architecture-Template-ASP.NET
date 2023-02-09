@@ -1,10 +1,14 @@
 using System.Text;
 using Application.Common.Interfaces.Persistence;
+using Application.Common.Interfaces.Persistence.Commands;
+using Application.Common.Interfaces.Persistence.Query;
 using CA.Application.Common.Interfaces.Authentication;
 using CA.Application.Common.Interfaces.Persistence.Base;
 using CA.Infrastructure.DataContext;
 using CA.Infrastructure.Persistence;
 using CA.Infrastructure.Persistence.Base;
+using CA.Infrastructure.Persistence.Commands;
+using CA.Infrastructure.Persistence.Query;
 using Infrastructure.Persistence.Base;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -24,13 +28,15 @@ public static class ConfigureServices
         services
             .AddAuth(configuration)
             .AddPersistance()
-            .AddDataContext(configuration);
+            .AddDataContext();
         return services;
     }
     public static IServiceCollection AddDataContext(
-        this IServiceCollection services, ConfigurationManager configuration)
+        this IServiceCollection services)
     {
-        services.AddDbContext<EfCoreContext>(options => options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
+        services.AddDbContext<EfCoreContext>(options => options.UseSqlite("Data Source=../CA.Infrastructure/template.db"));
+        services.AddSingleton<DapperContext>();
+
         return services;
     }
     public static IServiceCollection AddPersistance(
@@ -38,7 +44,8 @@ public static class ConfigureServices
     {
         services.AddScoped(typeof(ICommandRepository<>), typeof(CommandRepository<>));
         services.AddScoped(typeof(IQueryRepository<>), typeof(QueryRepository<>));
-        services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<IUserCommandRepository, UserCommandRepository>();
+        services.AddTransient<IUserQueryRepository, UserQueryRepository>();
 
         return services;
     }
@@ -63,7 +70,7 @@ public static class ConfigureServices
                 ValidIssuer = jwtSettings.Issuer,
                 ValidAudience = jwtSettings.Audience,
                 IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(jwtSettings.Secret)),
+                    Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
             });
 
         return services;

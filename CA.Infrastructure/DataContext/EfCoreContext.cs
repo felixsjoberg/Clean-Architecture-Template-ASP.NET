@@ -9,6 +9,5 @@ public class EfCoreContext : DbContext
     public EfCoreContext(DbContextOptions<EfCoreContext> options) : base(options)
     {
     }
-    public DbSet<User> Users { get; set; }
-
+    public DbSet<User> Users { get; set; } = null!;
 }
